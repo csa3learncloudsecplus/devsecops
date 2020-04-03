@@ -41,5 +41,22 @@ steps {
 sh 'inspec exec api-ping/controls/test.rb'
 }
 }
+
+stage('Prod (Deploy)') {
+environment {
+AWS_STAGE = 'prod'
+}
+steps {
+sh 'serverless create_domain'
+sh 'serverless deploy -s prod'
+}
+}
+stage('Inspec Prod'){
+steps {
+sh 'inspec exec api-ping/controls/prod.rb'
+}
+}
+
+
 }
 }
