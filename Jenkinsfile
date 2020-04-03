@@ -26,7 +26,7 @@ sh 'serverless create_domain'
 sh 'serverless deploy -s dev'
 }
 }
- 
+
 stage('Test (Deploy)') {
 environment {
 AWS_STAGE = 'test'
@@ -36,6 +36,10 @@ sh 'serverless create_domain'
 sh 'serverless deploy -s test'
 }
 }
-
+stage('Inspec Test'){
+steps {
+sh 'inspec exec api-ping/controls/test.rb'
+}
+}
 }
 }
